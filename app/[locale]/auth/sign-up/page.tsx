@@ -1,24 +1,36 @@
 "use client"
 
-import { ROUTES } from "@/constants/routes"
+import { ROUTES, SERVER_ROUTES } from "@/constants/routes"
+import { apiPost } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { Eye, EyeOff } from "lucide-react"
 import { signIn } from "next-auth/react"
 import { useTranslations } from "next-intl"
 import Link from "next/link"
 import { SubmitEventHandler, useState } from "react"
-import { Button, Card } from "react-bootstrap"
+import { Card } from "react-bootstrap"
 
-export default function SignIn() {
+
+export default function SignUpPage() {
+  const [username, setUsername] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [showPass, setShowPass] = useState<boolean>(false)
   const t = useTranslations()
+
   const handleSubmit: SubmitEventHandler = async (e) => {
     e.preventDefault()
 
+    const route = SERVER_ROUTES.USER;
+    const body = { username, email, password };
+    const res = await apiPost({ route, body })
+
+    if (!res) {
+      throw new Error("User already exists")
+    }
+
     await signIn("credentials", {
-      email: email,
+      email: res.email,
       password: password,
       callbackUrl: ROUTES.ME
     })
@@ -26,8 +38,19 @@ export default function SignIn() {
   return (
     <main className="flex justify-center">
       <Card className="w-105 text-center shadow-lg rounded-md">
-        <p>{t("not signed in")}</p>
         <form onSubmit={handleSubmit} className="space-y-4  ">
+          <div className="w-80 ml-10">
+          </div>
+          <div className="w-80 ml-10">
+            <label htmlFor="username">{t("lastName")}</label>
+            <input
+              id="username"
+              type="username"
+              placeholder="Reactor"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
           <div className="w-80 ml-10">
             <label htmlFor="email">{t("email")}</label>
             <input
@@ -49,8 +72,8 @@ export default function SignIn() {
                 onChange={(e) => setPassword(e.target.value)}
               />
               <button
-                type="button"
                 className="ml-3"
+                type="button"
                 onClick={() => {
                   setShowPass(!showPass);
                 }}
@@ -59,11 +82,10 @@ export default function SignIn() {
               </button>
             </div>
           </div>
-          <Button type="submit">{t("signIn")}</Button>
+          <button type="submit">{t("register")}</button>
         </form>
-        <AuthButton />
-        <h1>{t("not a member yet?")}</h1>
-        <Link href={ROUTES.REGISTER}>{t("register")}</Link>
+        <h1>{t("Already registered?")}</h1>
+        <Link href={ROUTES.SIGNIN}>{t("signIn")}</Link>
       </Card>
     </main>
   );

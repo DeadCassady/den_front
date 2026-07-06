@@ -1,4 +1,6 @@
-import { Account } from "next-auth";
+import { apiPost } from "@/lib/api";
+import NextAuth from "next-auth";
+import { JWT } from "next-auth/jwt";
 import Credentials from "next-auth/providers/credentials";
 
 export const authOptions = {
@@ -29,14 +31,25 @@ export const authOptions = {
   callbacks: {
     async jwt({
       token,
-      account,
       user,
     }: {
       token: JWT;
-      account?: Account | null;
       user?: any
     }) {
+      token.accessToken = user.access_token
+      token.provider = "credentials"
 
+      return token
+    },
+    session({ session, token }: { session: any; token: any }) {
+      session.accessToken = token.accessToken
+      session.email = token.email
+      return session
     }
   }
 }
+
+const handler = NextAuth(authOptions)
+
+export const GET = handler
+export const POST = handler
