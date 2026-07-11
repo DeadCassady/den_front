@@ -42,7 +42,7 @@ export default function SignUpPage() {
           <div className="w-80 ml-10">
           </div>
           <div className="w-80 ml-10">
-            <label htmlFor="username">{t("lastName")}</label>
+            <label htmlFor="username">{t("username")}</label>
             <input
               id="username"
               type="username"

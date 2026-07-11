@@ -1,4 +1,6 @@
+import { authOptions } from "@/lib/auth-config";
 import { SERVER_ROUTES } from "@/constants/routes";
+import { getServerSession } from "next-auth";
 
 interface Options {
   route?: string;
@@ -14,11 +16,12 @@ interface Options {
 }
 
 export const apiGet = async (options: Options) => {
+  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${options.token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!res.ok) {
@@ -29,17 +32,17 @@ export const apiGet = async (options: Options) => {
 };
 
 export const apiPost = async (options: Options) => {
+  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${options.token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       ...options.body,
     }),
   });
-
   if (!res.ok) {
     return null;
   }
@@ -47,11 +50,12 @@ export const apiPost = async (options: Options) => {
 };
 
 export const apiPatch = async (options: Options) => {
+  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${options.token}`,
+      Authorization: `Bearer ${token}`,
     },
     body: JSON.stringify({
       ...options.body,
@@ -64,11 +68,12 @@ export const apiPatch = async (options: Options) => {
 };
 
 export const apiDelete = async (options: Options) => {
+  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${options.token}`,
+      Authorization: `Bearer ${token}`,
     },
   });
   if (!res.ok) {
