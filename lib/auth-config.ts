@@ -10,8 +10,8 @@ export const authOptions = {
         const body = {
           email: credentials?.email?.trim(),
           password: credentials?.password.trim(),
-        }
-        const res = await fetch(`${SERVER_ROUTES.HOST}`, {
+        };
+        const res = await fetch(`${SERVER_ROUTES.HOST}${SERVER_ROUTES.LOGIN}`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -19,7 +19,7 @@ export const authOptions = {
           body: JSON.stringify(body),
         });
         if (!res.ok) {
-          throw new Error("Not able to authorize")
+          throw new Error("Not able to authorize");
         }
         const data = await res.json();
 
@@ -27,29 +27,25 @@ export const authOptions = {
           id: data.user?.id,
           email: data.user?.email,
           access_token: data.access_token,
-        }
-      }
-    })
+        };
+      },
+    }),
   ],
   secret: process.env.NEXTAUTH_SECRET!,
 
   callbacks: {
-    async jwt({
-      token,
-      user,
-    }: {
-      token: JWT;
-      user?: any
-    }) {
-      token.accessToken = user.access_token
-      token.provider = "credentials"
+    async jwt({ token, user }: { token: JWT; user?: any }) {
+      if (user) {
+        token.accessToken = user.access_token;
+      }
+      token.provider = "credentials";
 
-      return token
+      return token;
     },
     session({ session, token }: { session: any; token: any }) {
-      session.accessToken = token.accessToken
-      session.email = token.email
-      return session
-    }
-  }
-}
+      session.accessToken = token.accessToken;
+      session.email = token.email;
+      return session;
+    },
+  },
+};

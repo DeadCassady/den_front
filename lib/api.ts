@@ -14,14 +14,16 @@ interface Options {
     password?: string;
   };
 }
+async function getToken() {
+  return await getServerSession(authOptions);
+}
 
 export const apiGet = async (options: Options) => {
-  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${options.token}`,
     },
   });
   if (!res.ok) {
@@ -32,12 +34,11 @@ export const apiGet = async (options: Options) => {
 };
 
 export const apiPost = async (options: Options) => {
-  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${options.token}`,
     },
     body: JSON.stringify({
       ...options.body,
@@ -50,12 +51,11 @@ export const apiPost = async (options: Options) => {
 };
 
 export const apiPatch = async (options: Options) => {
-  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${options.token}`,
     },
     body: JSON.stringify({
       ...options.body,
@@ -68,12 +68,11 @@ export const apiPatch = async (options: Options) => {
 };
 
 export const apiDelete = async (options: Options) => {
-  const token = await getServerSession(authOptions);
   const res = await fetch(`${SERVER_ROUTES.HOST}${options.route}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${options.token}`,
     },
   });
   if (!res.ok) {

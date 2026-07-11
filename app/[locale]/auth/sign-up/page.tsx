@@ -1,7 +1,6 @@
 "use client"
 
 import { ROUTES, SERVER_ROUTES } from "@/constants/routes"
-import { apiPost } from "@/lib/api"
 import { cn } from "@/lib/utils"
 import { Eye, EyeOff } from "lucide-react"
 import { signIn } from "next-auth/react"
@@ -12,7 +11,7 @@ import { Card } from "react-bootstrap"
 
 
 export default function SignUpPage() {
-  const [username, setUsername] = useState<string>("")
+  const [name, setName] = useState<string>("")
   const [email, setEmail] = useState<string>("")
   const [password, setPassword] = useState<string>("")
   const [showPass, setShowPass] = useState<boolean>(false)
@@ -21,16 +20,20 @@ export default function SignUpPage() {
   const handleSubmit: SubmitEventHandler = async (e) => {
     e.preventDefault()
 
-    const route = SERVER_ROUTES.USER;
-    const body = { username, email, password };
-    const res = await apiPost({ route, body })
+    const res = await fetch(`${SERVER_ROUTES.HOST}${SERVER_ROUTES.REGISTER}`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name, email, password }),
+    })
 
-    if (!res) {
+    if (!res.ok) {
       throw new Error("User already exists")
     }
 
+    const data = await res.json()
+
     await signIn("credentials", {
-      email: res.email,
+      email: data.user.email,
       password: password,
       callbackUrl: ROUTES.ME
     })
@@ -42,24 +45,28 @@ export default function SignUpPage() {
           <div className="w-80 ml-10">
           </div>
           <div className="w-80 ml-10">
-            <label htmlFor="username">{t("username")}</label>
-            <input
-              id="username"
-              type="username"
-              placeholder="Reactor"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-            />
+            <label htmlFor="name">{t("username")}</label>
+            <div className="flex">
+              <input
+                id="name"
+                type="text"
+                placeholder="Reactor"
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
           </div>
           <div className="w-80 ml-10">
             <label htmlFor="email">{t("email")}</label>
-            <input
-              id="email"
-              type="email"
-              placeholder="email@email.email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-            />
+            <div className="flex">
+              <input
+                id="email"
+                type="email"
+                placeholder="email@email.email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
           </div>
           <div className="w-85 ml-10">
             <label htmlFor="password">{t("password")}</label>
@@ -84,7 +91,7 @@ export default function SignUpPage() {
           </div>
           <button type="submit">{t("register")}</button>
         </form>
-        <h1>{t("Already registered?")}</h1>
+        <h1>{t("already registered?")}</h1>
         <Link href={ROUTES.SIGNIN}>{t("signIn")}</Link>
       </Card>
     </main>

@@ -12,9 +12,9 @@ export const ROUTES = {
 export const SERVER_ROUTES = {
   HOST: "http://localhost:3000",
   USER: "/user",
-  LOGIN: "/login",
-  REGISTER: "/register",
+  LOGIN: "/auth/login",
+  REGISTER: "/auth/register",
   ORDERS: "/orders",
   PRODUCTS: "/products",
-  ME: "/me",
+  ME: "/auth/me",
 };
