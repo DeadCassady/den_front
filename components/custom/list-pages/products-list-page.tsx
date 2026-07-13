@@ -29,7 +29,7 @@ export default function ProductsListPage({ products }: Props) {
               placeholder="search by type"
               value={type}
               onChange={(e) => setType(e.target.value)}
-              className="px-3  rounded-md w-35 "
+              className="px-3 rounded-md w-35 border"
             />
           </div>
           <div className="flex p-2">
@@ -39,7 +39,7 @@ export default function ProductsListPage({ products }: Props) {
               placeholder="search by specification"
               value={spec}
               onChange={(e) => setSpec(e.target.value)}
-              className="px-3  rounded-md w-50 "
+              className="px-3 rounded-md w-50 border"
             />
           </div>
         </div>
