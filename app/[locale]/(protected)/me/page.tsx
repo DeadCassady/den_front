@@ -4,9 +4,9 @@ import { authOptions } from "@/lib/auth-config"
 import { getServerSession } from "next-auth"
 
 export default async function MyPage() {
-  const token = await getServerSession(authOptions)
+  const session = await getServerSession(authOptions)
   const route = SERVER_ROUTES.ME
-  const res = await apiGet({ token, route })
+  const res = await apiGet({ token: session?.accessToken, route })
   if (!res) {
     return (<p>No user page!</p>)
   }
