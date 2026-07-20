@@ -6,7 +6,7 @@ import { Nav } from "react-bootstrap"
 
 interface Props {
   href: string
-  children: string
+  children: React.ReactNode
 }
 
 export default function NavLink({ href, children }: Props) {
@@ -16,7 +16,7 @@ export default function NavLink({ href, children }: Props) {
     <Nav.Link href={href}
       className={cn("px-3", "py-2", {
         "text-blue-500 font-semibold": isActive,
-        "text-muted-foreground hover:text-foreground": !isActive
+        "text-muted-foreground hover:text-foreground hover:text-blue-300": !isActive
       })} >
       {children}
     </Nav.Link>

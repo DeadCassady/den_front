@@ -7,7 +7,7 @@ import LanguageSwitcher from "./language-switcher"
 
 export default function NavigationMenu() {
   return (
-    <aside className="w-45 border-r h-screen " >
+    <aside className="w-45 border-r h-full" >
       <Nav className="flex flex-col gap-2">
         <NavLink href={ROUTES.ME}>Me</NavLink>
         <NavLink href={ROUTES.ORDERS}>Orders</NavLink>

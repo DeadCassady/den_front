@@ -2,6 +2,7 @@
 
 import { Product } from "@/constants/types"
 import { useState } from "react"
+import ProductCard from "../cards/ProductCard"
 
 interface Props {
   products: Product[]
@@ -15,7 +16,7 @@ export default function ProductsListPage({ products }: Props) {
 
   return (
     <div className="p-4 py-3 space-y-4">
-      <div className="flex">
+      <div className="flex ">
         <div className="flex h-10">
           <div className="flex p-1 font-bold text-2xl size-50">
             <p>Products</p>
@@ -43,9 +44,11 @@ export default function ProductsListPage({ products }: Props) {
             />
           </div>
         </div>
+      </div>
+      <div className="overflow-auto">
         {
           filteredProducts.map((data) => (
-            <p>{data.title}</p>
+            <ProductCard key={String(data.id)} product={data} />
           ))
         }
       </div>
