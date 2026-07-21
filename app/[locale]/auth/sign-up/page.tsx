@@ -91,7 +91,7 @@ export default function SignUpPage() {
           </div>
           <button type="submit">{t("register")}</button>
         </form>
-        <h1>{t("already registered?")}</h1>
+        <p>{t("already registered?")}</p>
         <Link href={ROUTES.SIGNIN}>{t("signIn")}</Link>
       </Card>
     </main>

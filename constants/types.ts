@@ -2,7 +2,7 @@ export interface Order {
   id: number;
   title: string;
   date: Date;
-  productIds: number[];
+  products: Product[];
 }
 
 export interface Product {
@@ -17,18 +17,18 @@ export interface Product {
   date: Date;
 }
 
-interface Price {
+export interface Price {
   value: number;
   symbol: CURRENCIES;
   isDefault: boolean;
 }
 
-enum CURRENCIES {
+export enum CURRENCIES {
   USD,
   UAH,
 }
 
-interface Guarantee {
-  start: Date;
-  end: Date;
+export interface Guarantee {
+  start: string | Date;
+  end: string | Date;
 }

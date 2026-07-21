@@ -3,6 +3,7 @@
 import { Product } from "@/constants/types"
 import { useState } from "react"
 import ProductCard from "../cards/ProductCard"
+import { FormControl } from "react-bootstrap"
 
 interface Props {
   products: Product[]
@@ -25,7 +26,7 @@ export default function ProductsListPage({ products }: Props) {
           </div>
           <div className="flex p-2">
             <p>Type:</p>
-            <input
+            <FormControl
               type="string"
               placeholder="search by type"
               value={type}
@@ -35,7 +36,7 @@ export default function ProductsListPage({ products }: Props) {
           </div>
           <div className="flex p-2">
             <p>Specification:</p>
-            <input
+            <FormControl
               type="string"
               placeholder="search by specification"
               value={spec}

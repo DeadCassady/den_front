@@ -39,7 +39,7 @@ export default function OrderCard({ currentOrder, order, submit, expand }: Props
             </Button>
             <div className="w-25 ">
 
-              <p className="text-blue-900 text-lg">{order.productIds.length}</p>
+              <p className="text-blue-900 text-lg">{order.products.length}</p>
               <p className="text-blue-900">Products</p>
             </div>
             <p className="text-blue-900 w-70">{date}</p>

@@ -1,21 +1,22 @@
-import { authOptions } from "@/lib/auth-config";
 import { SERVER_ROUTES } from "@/constants/routes";
-import { getServerSession } from "next-auth";
+import { Guarantee, Price } from "@/constants/types";
 
 interface Options {
   route?: string;
   token?: string;
   body?: {
     username?: string;
-    description?: string;
-    firstName?: string;
-    lastName?: string;
     email?: string;
     password?: string;
+    serialNumber?: string;
+    isNew?: boolean;
+    title?: string;
+    type?: string;
+    specification?: string;
+    guarantee?: Guarantee;
+    price?: Price[];
+    orderId?: number;
   };
-}
-async function getToken() {
-  return await getServerSession(authOptions);
 }
 
 export const apiGet = async (options: Options) => {

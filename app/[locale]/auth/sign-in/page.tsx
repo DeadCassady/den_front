@@ -24,7 +24,7 @@ export default function SignIn() {
     })
   }
   return (
-    <main className="flex justify-center ">
+    <main className="flex justify-center">
       <Card className="w-105 text-center shadow-lg rounded-md">
         <p>{t("not signed in")}</p>
         <form onSubmit={handleSubmit} className="space-y-4  ">
@@ -63,7 +63,7 @@ export default function SignIn() {
           </div>
           <Button type="submit">{t("signIn")}</Button>
         </form>
-        <h1>{t("not a member yet?")}</h1>
+        <p>{t("not a member yet?")}</p>
         <Link href={ROUTES.REGISTER}>{t("register")}</Link>
       </Card>
     </main>
